@@ -45,7 +45,6 @@ public class BaseTestScript {
         executionServer = serverConfig != null ? serverConfig.get("environment") : null;
         isIdam = Boolean.parseBoolean(serverConfig != null ? serverConfig.get("isIDAM") : null);
         apiUrls = Utils.getPropertyMAP(executionServer);
-        CustomListener customListener = new CustomListener();
         initializeLogger();
     }
 

@@ -9,7 +9,6 @@ import com.rjil.cloud.tej.Common.Utils;
 import com.rjil.cloud.tej.Common.datadriven.model.TestDataRecord;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.testng.annotations.BeforeSuite;
 
 import java.text.ParseException;
 
@@ -44,9 +43,6 @@ public class loginBaseScript extends BaseTestScript {
         deviceInfoModel = new DeviceInfoModel();
         baseAPIModel = new BaseAPIModel();
     }
-
-
-
 
 
     /**
