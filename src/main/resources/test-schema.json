@@ -1,0 +1,212 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "userId": {
+      "type": "string"
+    },
+    "authProviderToken": {
+      "type": "string"
+    },
+    "authProviderId": {
+      "type": "integer"
+    },
+    "emailId": {
+      "type": "string"
+    },
+    "firstName": {
+      "type": "string"
+    },
+    "lastName": {
+      "type": "string"
+    },
+    "country": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "idamUnique": {
+      "type": "string"
+    },
+    "authToken": {
+      "type": "object",
+      "properties": {
+        "accessToken": {
+          "type": "string"
+        },
+        "refreshToken": {
+          "type": "string"
+        },
+        "expiresIn": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "accessToken",
+        "refreshToken",
+        "expiresIn"
+      ]
+    },
+    "allocatedSpace": {
+      "type": "integer"
+    },
+    "usedSpace": {
+      "type": "integer"
+    },
+    "rootFolderKey": {
+      "type": "string"
+    },
+    "isMobileNumVerified": {
+      "type": "boolean"
+    },
+    "isEmailIdVerified": {
+      "type": "boolean"
+    },
+    "language": {
+      "type": "string"
+    },
+    "timeZone": {
+      "type": "string"
+    },
+    "deviceKey": {
+      "type": "string"
+    },
+    "jToken": {
+      "type": "string"
+    },
+    "subscriberId": {
+      "type": "string"
+    },
+    "isNewUserNotify": {
+      "type": "string"
+    },
+    "isNewDeviceNotify": {
+      "type": "string"
+    },
+    "endPoints": {
+      "type": "object",
+      "properties": {
+        "amikoCab": {
+          "type": "string"
+        },
+        "amikoMerge": {
+          "type": "string"
+        },
+        "amikoRestore": {
+          "type": "string"
+        },
+        "amikoBackup": {
+          "type": "string"
+        },
+        "comments": {
+          "type": "string"
+        },
+        "media": {
+          "type": "string"
+        },
+        "likes": {
+          "type": "string"
+        },
+        "boards": {
+          "type": "string"
+        },
+        "boardInvites": {
+          "type": "string"
+        },
+        "nms": {
+          "type": "string"
+        },
+        "share": {
+          "type": "string"
+        },
+        "security": {
+          "type": "string"
+        },
+        "upload": {
+          "type": "string"
+        },
+        "singleFileUpload": {
+          "type": "string"
+        },
+        "chunkUpload": {
+          "type": "string"
+        },
+        "publicAccount": {
+          "type": "string"
+        },
+        "publicShare": {
+          "type": "string"
+        },
+        "appVersion": {
+          "type": "string"
+        },
+        "productTerms": {
+          "type": "string"
+        },
+        "productFaq": {
+          "type": "string"
+        },
+        "productPolicy": {
+          "type": "string"
+        },
+        "aboutProduct": {
+          "type": "string"
+        },
+        "productLicences": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "amikoCab",
+        "amikoMerge",
+        "amikoRestore",
+        "amikoBackup",
+        "comments",
+        "media",
+        "likes",
+        "boards",
+        "boardInvites",
+        "nms",
+        "share",
+        "security",
+        "upload",
+        "singleFileUpload",
+        "chunkUpload",
+        "publicAccount",
+        "publicShare",
+        "appVersion",
+        "productTerms",
+        "productFaq",
+        "productPolicy",
+        "aboutProduct",
+        "productLicences"
+      ]
+    }
+  },
+  "required": [
+    "userId",
+    "authProviderToken",
+    "authProviderId",
+    "emailId",
+    "firstName",
+    "lastName",
+    "country",
+    "status",
+    "idamUnique",
+    "authToken",
+    "allocatedSpace",
+    "usedSpace",
+    "rootFolderKey",
+    "isMobileNumVerified",
+    "isEmailIdVerified",
+    "language",
+    "timeZone",
+    "deviceKey",
+    "jToken",
+    "subscriberId",
+    "isNewUserNotify",
+    "isNewDeviceNotify",
+    "endPoints"
+  ]
+}

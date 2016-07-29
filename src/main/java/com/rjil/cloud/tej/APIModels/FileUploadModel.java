@@ -1,10 +1,11 @@
-package com.rjil.cloud.tej.SecurityAPI.pojo;
-
-import java.util.HashMap;
+package com.rjil.cloud.tej.APIModels;
 
 import com.google.gson.Gson;
 
-public class SingleFileUploadPojo {
+/**
+ * File Upload API Model
+ */
+public class FileUploadModel {
 	String name;
 	Double size;
 	String hash;
@@ -15,15 +16,10 @@ public class SingleFileUploadPojo {
 	Boolean isAutoUpload;
 	Boolean isContactPhoto;
 	String sourceFolder;
-	HashMap location;
-	String latitude;
-	String longitude;
-	String altitude;
+	LocationModel location;
 	String[] keywords;
 	Boolean hidden;
-	
-	
-	
+
 	public String getName() {
 		return name;
 	}
@@ -84,30 +80,6 @@ public class SingleFileUploadPojo {
 	public void setSourceFolder(String sourceFolder) {
 		this.sourceFolder = sourceFolder;
 	}
-	public HashMap getLocation() {
-		return location;
-	}
-	public void setLocation(HashMap location) {
-		this.location = location;
-	}
-	public String getLatitude() {
-		return latitude;
-	}
-	public void setLatitude(String latitude) {
-		this.latitude = latitude;
-	}
-	public String getLongitude() {
-		return longitude;
-	}
-	public void setLongitude(String longitude) {
-		this.longitude = longitude;
-	}
-	public String getAltitude() {
-		return altitude;
-	}
-	public void setAltitude(String altitude) {
-		this.altitude = altitude;
-	}
 	public String[] getKeywords() {
 		return keywords;
 	}
@@ -120,8 +92,16 @@ public class SingleFileUploadPojo {
 	public void setHidden(Boolean hidden) {
 		this.hidden = hidden;
 	}
-	
-	public static String getGsonFromObject(SingleFileUploadPojo request) {
+	public LocationModel getLocation() {
+		return location;
+	}
+
+	public void setLocation(LocationModel location) {
+		this.location = location;
+	}
+
+
+	public static String getGsonFromObject(FileUploadModel request) {
 		Gson gson = new Gson();
 		 return gson.toJson(request);
 	}
