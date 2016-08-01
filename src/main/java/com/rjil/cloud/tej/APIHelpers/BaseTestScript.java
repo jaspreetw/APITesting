@@ -1,4 +1,4 @@
-package com.rjil.cloud.tej.APIHelpers1;
+package com.rjil.cloud.tej.APIHelpers;
 
 
 import com.jayway.restassured.RestAssured;
@@ -62,7 +62,7 @@ public class BaseTestScript {
      * Precondition manager for any precondition. this method can be override in Feature Base Script
      */
     public void preConditionManager() {
-        if (!(this instanceof LoginBaseScript1)) {
+        if (!(this instanceof LoginBaseScript)) {
             defaultLogin();
         }
     }
@@ -71,9 +71,9 @@ public class BaseTestScript {
      * Method to default login
      */
     public void defaultLogin() {
-        ValidatableResponse response = LoginBaseScript1.getLoginResponse();
-        accessToken = LoginBaseScript1.getAccessToken(response);
-        userId = LoginBaseScript1.getUserId(response);
+        ValidatableResponse response = LoginBaseScript.getLoginResponse();
+        accessToken = LoginBaseScript.getAccessToken(response);
+        userId = LoginBaseScript.getUserId(response);
     }
 
     /**

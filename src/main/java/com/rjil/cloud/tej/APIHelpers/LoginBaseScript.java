@@ -1,4 +1,4 @@
-package com.rjil.cloud.tej.APIHelpers1;
+package com.rjil.cloud.tej.APIHelpers;
 
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.restassured.response.ValidatableResponse;
@@ -11,7 +11,7 @@ import java.io.IOException;
 
 import static com.jayway.restassured.RestAssured.given;
 
-public class LoginBaseScript1 extends BaseTestScript {
+public class LoginBaseScript extends BaseTestScript {
     protected static LoginConstants loginConstants;
     protected static String loginJOSNBody = "";
     protected static String loginURL = "";
@@ -19,7 +19,7 @@ public class LoginBaseScript1 extends BaseTestScript {
     /**
      * Constructor to initialize Models and Login URLs
      */
-    public LoginBaseScript1() {
+    public LoginBaseScript() {
         initModels();
 
         String path = System.getProperty("user.dir") + "/resources/loginTestData/loginBody.js";
