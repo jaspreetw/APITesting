@@ -10,7 +10,7 @@
 package com.rjil.cloud.tej.Common.logging;
 
 
-import com.rjil.cloud.tej.APIhelpers.BaseTestScript;
+import com.rjil.cloud.tej.APIHelpers1.BaseTestScript;
 import com.rjil.cloud.tej.Common.Utils;
 import com.rjil.cloud.tej.Common.logging.level.FailLevel;
 import com.rjil.cloud.tej.Common.logging.level.PassLevel;

@@ -2,7 +2,7 @@ package com.rjil.cloud.tej.API.test;
 
 import com.jayway.restassured.module.jsv.JsonSchemaValidator;
 import com.jayway.restassured.response.ValidatableResponse;
-import com.rjil.cloud.tej.APIhelpers.loginBaseScript;
+import com.rjil.cloud.tej.APIHelpers1.LoginBaseScript1;
 import com.rjil.cloud.tej.Common.VerificationFailException;
 import com.rjil.cloud.tej.Common.Verify;
 import com.rjil.cloud.tej.Common.datadriven.model.TestDataRecord;
@@ -18,7 +18,7 @@ import java.text.ParseException;
  * Login script
  */
 
-public class LoginTest extends loginBaseScript {
+public class LoginTest1 extends LoginBaseScript1 {
 
 
     @DataProvider
