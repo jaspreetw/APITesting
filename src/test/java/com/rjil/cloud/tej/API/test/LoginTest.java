@@ -2,13 +2,13 @@ package com.rjil.cloud.tej.API.test;
 
 import com.jayway.restassured.module.jsv.JsonSchemaValidator;
 import com.jayway.restassured.response.ValidatableResponse;
-import com.rjil.cloud.tej.APIHelpers.LoginBaseScript;
-import com.rjil.cloud.tej.Common.VerificationFailException;
-import com.rjil.cloud.tej.Common.Verify;
-import com.rjil.cloud.tej.Common.datadriven.model.TestDataRecord;
-import com.rjil.cloud.tej.Common.logging.FrameworkLogger;
-import com.rjil.cloud.tej.Enums.DataType;
-import com.rjil.cloud.tej.Enums.LoginParameters;
+import com.rjil.cloud.tej.apihelpers1.LoginBaseScript;
+import com.rjil.cloud.tej.common1.VerificationFailException;
+import com.rjil.cloud.tej.common1.Verify;
+import com.rjil.cloud.tej.common1.datadriven.model.TestDataRecord;
+import com.rjil.cloud.tej.common1.logging.FrameworkLogger;
+import com.rjil.cloud.tej.enums1.DataType;
+import com.rjil.cloud.tej.enums1.LoginParameters;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
