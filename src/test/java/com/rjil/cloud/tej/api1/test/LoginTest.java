@@ -1,4 +1,4 @@
-package com.rjil.cloud.tej.API.test;
+package com.rjil.cloud.tej.api1.test;
 
 import com.jayway.restassured.module.jsv.JsonSchemaValidator;
 import com.jayway.restassured.response.ValidatableResponse;
