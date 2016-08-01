@@ -9,8 +9,6 @@ import junit.framework.Assert;
 */
 public class Verify {
 
-    private static Integer screenCaptureIndex = 1;
-
    /**
     * Verifies if the object is true, raise an exception otherwise
     */
@@ -138,10 +136,9 @@ public class Verify {
     private static void fail(String descriptionMessage, String errorMessage, Boolean suppressException)
                                                                                 throws VerificationFailException {
 
-
         // Build the error message.
         StringBuilder combinedMessage = new StringBuilder(descriptionMessage);
-        if(descriptionMessage != null && !descriptionMessage.isEmpty()) {
+        if(!descriptionMessage.isEmpty()) {
             combinedMessage.append("\n");
         }
         combinedMessage.append(" VERIFICATION FAILS BETWEEN OBJECTS: ");
@@ -155,6 +152,4 @@ public class Verify {
             throw new VerificationFailException(combinedMessage.toString());
         }
     }
-
-
 }
