@@ -8,7 +8,7 @@ import com.rjil.cloud.tej.Common.Verify;
 import com.rjil.cloud.tej.Common.datadriven.model.TestDataRecord;
 import com.rjil.cloud.tej.Common.logging.FrameworkLogger;
 import com.rjil.cloud.tej.Enums.DataType;
-import com.rjil.cloud.tej.Enums.LoginParameters1;
+import com.rjil.cloud.tej.Enums.LoginParameters;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -36,9 +36,9 @@ public class LoginTest extends LoginBaseScript {
 
     @Test
     public void checkLogin() throws org.json.simple.parser.ParseException, VerificationFailException, ParseException {
-        FrameworkLogger.logStep("Set" + LoginParameters1.AUTHPROVIDERID.getValue());
+        FrameworkLogger.logStep("Set" + LoginParameters.AUTHPROVIDERID.getValue());
 
-        setLoginData(LoginParameters1.AUTHPROVIDERID.getValue(), 1);
+        setLoginData(LoginParameters.AUTHPROVIDERID.getValue(), 1);
         ValidatableResponse response = getLoginResponse();
         int status = response.extract().statusCode();
 

@@ -3,7 +3,7 @@ package com.rjil.cloud.tej.Enums;
 /**
  * Login Parameter Enum
  */
-public enum LoginParameters1 {
+public enum LoginParameters {
     AUTHPROVIDERID("authProviderId"),
     EMAILID("emailId"),
     LOGINID("loginId"),
@@ -24,7 +24,7 @@ public enum LoginParameters1 {
 
     public String value;
 
-    LoginParameters1(String value) {
+    LoginParameters(String value) {
         this.value = value;
 
     }
