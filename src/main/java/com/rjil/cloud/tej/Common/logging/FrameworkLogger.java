@@ -33,6 +33,7 @@ public class FrameworkLogger {
 
     public static final String LOG_FILE_EXTENSION = ".log";
     public static final String LOG_FILE_NAME = "file";
+    public static final String PROJECT_CONFIG_PROPERTIES = "ProjectConfig.properties";
     public static String currentDate;
     private static String currentTestClassName;
 
@@ -78,14 +79,11 @@ public class FrameworkLogger {
         //Create map with al header data
         Map<String, String> headerDataMap = createHeaderData();
         //Create log file name
-        StringBuilder logfile_name = new StringBuilder(Utils.getProperty("ProjectConfig.properties", "LogPath"));
-        logfile_name.append(File.separator);
-        logfile_name.append(testClass.getSimpleName());
-        logfile_name.append("_");
-        logfile_name.append(currentDate);
 
         //Configure file appender
-        Logger.getRootLogger().addAppender(createFileAppender(headerDataMap, logfile_name.toString()));
+        Logger.getRootLogger().addAppender(createFileAppender(headerDataMap,
+                Utils.getProperty(PROJECT_CONFIG_PROPERTIES, "LogPath")
+                        + File.separator + testClass.getSimpleName() + "_" + currentDate));
 
     }
 

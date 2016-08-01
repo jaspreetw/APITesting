@@ -5,7 +5,6 @@ import com.rjil.cloud.tej.Common.datadriven.model.DataContainer;
 import com.rjil.cloud.tej.Common.datadriven.model.TestDataRecord;
 import com.rjil.cloud.tej.Common.datadriven.model.Value;
 import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import java.io.File;
@@ -35,13 +34,10 @@ public class JSONDataReader extends TestDataReader {
             File file = new File(uri);
             FileReader fileReader = new FileReader(file);
             JSONArray jsonArray = (JSONArray) parser.parse(fileReader);
-            //TestDataReader.logTestDataInfo(HeaderData.DataType.JSON.name(), file.getAbsolutePath());
-            for (Object arrayObject : jsonArray) {
-                JSONObject jsonObject = (JSONObject) arrayObject;
+            for (Object aJsonArray : jsonArray) {
+                String data = "record";
                 TestDataRecord record = new TestDataRecord();
-                for (Object key : jsonObject.keySet()) {
-                    record.addValue(new Value(String.valueOf(key), jsonObject.get(key)));
-                }
+                record.addValue(new Value(data, aJsonArray));
                 result.addTestData(record);
             }
         } catch (Exception e) {

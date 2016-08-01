@@ -8,21 +8,22 @@ import java.util.Map;
 import java.util.Properties;
 
 /**
- * Created by mahesh.chowdhari on 7/15/2016.
+ * Utils Class for util methods
  */
 public class Utils {
     /**
      * Method to get Property from file
+     *
      * @param file Property file
-     * @param key Property value
-     * @return
+     * @param key  Property value
+     * @return: Property value
      */
     public static String getProperty(String file, String key) {
 
         try {
-            file = System.getProperty("user.dir") + "/src/main/resources/" + file;
+            file = System.getProperty("user.dir") + "/resources/" + file;
             File config = new File(file);
-            FileInputStream input = null;
+            FileInputStream input;
             input = new FileInputStream(config.getAbsolutePath());
             Properties prop = new Properties();
             prop.load(input);
@@ -38,15 +39,16 @@ public class Utils {
 
     /**
      * Method to get Properties Map
+     *
      * @param server Execution Server
      * @return Property Map
      */
     public static Map<String, String> getPropertyMAP(String server) {
 
         try {
-            String path = System.getProperty("user.dir") + "/src/main/resources/serverURL/" + server + "/config.properties";
+            String path = System.getProperty("user.dir") + "/resources/serverURL/" + server + "/config.properties";
             File config = new File(path);
-            FileInputStream input = null;
+            FileInputStream input;
             input = new FileInputStream(config.getAbsolutePath());
             Properties prop = new Properties();
             prop.load(input);
@@ -64,14 +66,15 @@ public class Utils {
 
     /**
      * Method to get Properties Map from property file
-     * @return
+     *
+     * @return : Property Map
      */
     public static Map<String, String> getServerConfigMAP() {
 
         try {
-            String path = System.getProperty("user.dir") + "/src/main/resources/ProjectConfig.properties";
+            String path = System.getProperty("user.dir") + "/resources/ProjectConfig.properties";
             File config = new File(path);
-            FileInputStream input = null;
+            FileInputStream input;
             input = new FileInputStream(config.getAbsolutePath());
             Properties prop = new Properties();
             prop.load(input);
@@ -98,6 +101,7 @@ public class Utils {
 
     /**
      * Method to get Restassured Request Response from file
+     *
      * @return file data in string
      */
     public static StringBuilder getRestAssuredRequestResponse() {

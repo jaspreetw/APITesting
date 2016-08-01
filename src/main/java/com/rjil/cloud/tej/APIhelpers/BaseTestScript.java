@@ -5,22 +5,17 @@ import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.config.LogConfig;
 import com.jayway.restassured.filter.log.LogDetail;
 import com.jayway.restassured.response.ValidatableResponse;
-import com.rjil.cloud.tej.Common.CustomListener;
 import com.rjil.cloud.tej.Common.Utils;
 import com.rjil.cloud.tej.Common.datadriven.model.DataContainer;
 import com.rjil.cloud.tej.Common.datadriven.model.TestDataRecord;
 import com.rjil.cloud.tej.Common.datadriven.reader.*;
 import com.rjil.cloud.tej.Common.logging.FrameworkLogger;
-import groovy.util.logging.Log4j;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
+import com.rjil.cloud.tej.Enums.DataType;
 import org.testng.annotations.BeforeSuite;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.PrintStream;
-import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +28,6 @@ public class BaseTestScript {
     protected DataContainer dataContainer;
     public static Map<String, String> apiUrls;
     public static Map<String, String> serverConfig;
-    public static String testName;
     public static String accessToken;
     public static String userId;
 
@@ -81,6 +75,7 @@ public class BaseTestScript {
         accessToken = loginBaseScript.getAccessToken(response);
         userId = loginBaseScript.getUserId(response);
     }
+
     /**
      * Method to select dataType
      *
@@ -103,55 +98,30 @@ public class BaseTestScript {
         return null;
     }
 
-    /**
-     * Data type enum
-     */
-    protected enum DataType {
-        EXCEL,
-        JSON,
-        XML,
-        CSV,
-        EMPTY
-    }
 
     /**
      * Method to get test data for data driven test
-     * @param path Test data ile path
-     * @param dataType data type
+     *
+     * @param path:     Test data ile path
+     * @param dataType: data type
      * @return Test data record list in Array
      * @throws ParseException
      */
     public Object[][] getTesData(String path, DataType dataType) throws ParseException {
         String userDir = System.getProperty("user.dir");
-        path = userDir + "/src/main/resources/" + path;
+        path = userDir + "/resources/" + path;
         TestDataReader dataReader = getTestDataReaderByDataType(dataType);
         dataContainer = dataReader != null ? dataReader.readTestData(path) : null;
         List<TestDataRecord> testDataList = dataContainer != null ? dataContainer.getTestDataList() : null;
-        Object[][] data = new Object[testDataList.size()][1];
+        Object[][] data = new Object[0][];
         if (testDataList != null) {
+            data = new Object[testDataList.size()][1];
             for (int i = 0; i < testDataList.size(); i++) {
                 TestDataRecord testDataRecord = testDataList.get(i);
                 data[i] = new Object[1];
-                data[i][0] = testDataRecord;
+                data[i][0] = testDataRecord.getValueByIndex(0).getValue();
             }
         }
         return data;
     }
-
-    /**
-     * Get default test data form JSON
-     * @param path JSON file Path
-     * @return default test data
-     * @throws ParseException
-     */
-    public TestDataRecord getDefaultLoginData(String path) throws ParseException {
-        String userDir = System.getProperty("user.dir");
-        path = userDir + "/src/main/resources/" + path;
-        TestDataReader dataReader = getTestDataReaderByDataType(DataType.JSON);
-        dataContainer = dataReader != null ? dataReader.readTestData(path) : null;
-        List<TestDataRecord> testDataList = dataContainer != null ? dataContainer.getTestDataList() : null;
-        return testDataList.get(0);
-    }
-
-
 }
