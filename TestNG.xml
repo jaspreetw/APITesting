@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <suite name="example suite 1" verbose="1" >
     <listeners>
-        <listener class-name="com.rjil.cloud.tej.common1.CustomListener" />
+        <listener class-name="com.rjil.cloud.tej.common.CustomListener" />
     </listeners>
     <parameter name="loginType" value="nonIDAM" />
     <!--<parameter name="server" value="SIT" />-->
