@@ -1,10 +1,13 @@
 package com.rjil.cloud.tej.apihelpers;
 
 
+import com.jayway.jsonpath.JsonPath;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.config.LogConfig;
 import com.jayway.restassured.filter.log.LogDetail;
 import com.jayway.restassured.response.ValidatableResponse;
+import com.rjil.cloud.tej.apiconstants.LoginConstants;
+import com.rjil.cloud.tej.common.Base64;
 import com.rjil.cloud.tej.common.Utils;
 import com.rjil.cloud.tej.common.datadriven.model.DataContainer;
 import com.rjil.cloud.tej.common.datadriven.model.TestDataRecord;
@@ -15,11 +18,13 @@ import org.testng.annotations.BeforeSuite;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
+import static com.jayway.restassured.RestAssured.given;
 import static com.jayway.restassured.config.RestAssuredConfig.config;
 
 public class BaseTestScript {
@@ -30,6 +35,9 @@ public class BaseTestScript {
     public static Map<String, String> serverConfig;
     public static String accessToken;
     public static String userId;
+    protected static String loginJOSNBody = "";
+    protected static String loginURL = "";
+    protected static LoginConstants loginConstants;
 
     /**
      * Base Test script Constructor
@@ -40,6 +48,7 @@ public class BaseTestScript {
         isIdam = Boolean.parseBoolean(serverConfig != null ? serverConfig.get("isIDAM") : null);
         apiUrls = Utils.getPropertyMAP(executionServer);
         initializeLogger();
+        loginConstants = new LoginConstants();
     }
 
     /**
@@ -71,9 +80,14 @@ public class BaseTestScript {
      * Method to default login
      */
     public void defaultLogin() {
-        ValidatableResponse response = LoginBaseScript.getLoginResponse();
-        accessToken = LoginBaseScript.getAccessToken(response);
-        userId = LoginBaseScript.getUserId(response);
+        ValidatableResponse response = given().body(loginJOSNBody).header("Content-Type", "application/json").log().all()
+                .when()
+                .post(loginURL)
+                .then();
+        response.log().all();
+        Utils.addRequestResponseToLogger();
+        accessToken = getAccessToken(response);
+        userId = getUserId(response);
     }
 
     /**
@@ -124,4 +138,74 @@ public class BaseTestScript {
         }
         return data;
     }
+
+    /**
+     * update Json for username, password and device key. also update json for IDAM and non IDAM accounts.
+     */
+    public static void setIdamJsonBody() throws IOException {
+        setUserData();
+        updateJsonIDAM();
+        getLoginUrl();
+
+    }
+
+    /**
+     * Method to get login URL IDAM/NON IDAM
+     */
+    public static void getLoginUrl() {
+        //set idam url
+        if (!isIdam) {
+            loginURL = apiUrls.get("loginURL");
+        } else {
+            loginURL = apiUrls.get("IDAMLoginURL");
+        }
+    }
+
+    public static void updateJsonIDAM() {
+        //change Email Id field to Login ID and remove Auto provider ID for Idam account
+        if (isIdam) {
+            loginJOSNBody = JsonPath.parse(loginJOSNBody).renameKey("@", "emailId", "loginId").jsonString();
+            loginJOSNBody = JsonPath.parse(loginJOSNBody).delete(loginConstants.getAuthProviderId()).jsonString();
+        }
+    }
+
+    public static void setUserData() throws IOException {
+        //load json file
+        String path = System.getProperty("user.dir") + "/resources/loginTestData/loginBody.js";
+        File file = new File(path);
+
+        loginJOSNBody = JsonPath.parse(file).jsonString();
+        //Set Email Address, Password and Device Key form Property file
+        loginJOSNBody = setLoginData(loginConstants.getEmailId(), serverConfig.get("Email"), loginJOSNBody);
+        loginJOSNBody = setLoginData(loginConstants.getPassword(), serverConfig.get("Password"), loginJOSNBody);
+        loginJOSNBody = setLoginData(loginConstants.getDeviceKey(), serverConfig.get("deviceKey"), loginJOSNBody);
+    }
+
+    /**
+     * Method to update Login JSON Body
+     */
+    public static String setLoginData(String path, Object value, String jsonString) {
+        return JsonPath.parse(jsonString).set(path, value).jsonString();
+    }
+
+    /**
+     * Method to get Access Token
+     *
+     * @return Access Token
+     */
+    public static String getAccessToken(ValidatableResponse response) {
+        String accessToken = response.extract().path("accessToken");
+        accessToken = Base64.b64encode(accessToken);
+        return accessToken;
+    }
+
+    /**
+     * Method to get User Id
+     *
+     * @return UserId
+     */
+    public static String getUserId(ValidatableResponse response) {
+        return response.extract().path("userId");
+    }
+
 }

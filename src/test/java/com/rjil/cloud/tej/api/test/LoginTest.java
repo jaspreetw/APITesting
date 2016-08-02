@@ -40,7 +40,7 @@ public class LoginTest extends LoginBaseScript {
     public void checkLogin() throws org.json.simple.parser.ParseException, VerificationFailException, ParseException {
         FrameworkLogger.logStep("Set" + LoginParameters.AUTHPROVIDERID.getValue());
 
-        setLoginData(LoginParameters.AUTHPROVIDERID.getValue(), 1);
+        loginJOSNBody=setLoginData(LoginParameters.AUTHPROVIDERID.getValue(), 1,loginJOSNBody);
         ValidatableResponse response = getLoginResponse();
         int status = response.extract().statusCode();
         Verify.verifyEquals(status,200,"Verify Success Status");
