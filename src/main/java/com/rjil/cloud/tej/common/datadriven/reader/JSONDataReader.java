@@ -34,10 +34,10 @@ public class JSONDataReader extends TestDataReader {
             File file = new File(uri);
             FileReader fileReader = new FileReader(file);
             JSONArray jsonArray = (JSONArray) parser.parse(fileReader);
-            for (Object aJsonArray : jsonArray) {
-                String data = "record";
+            for (int i = 0; i < jsonArray.size(); i++) {
+                String data = "record"+i;
                 TestDataRecord record = new TestDataRecord();
-                record.addValue(new Value(data, aJsonArray));
+                record.addValue(new Value(data, jsonArray.get(i)));
                 result.addTestData(record);
             }
         } catch (Exception e) {

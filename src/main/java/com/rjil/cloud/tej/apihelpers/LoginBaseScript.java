@@ -21,7 +21,7 @@ public class LoginBaseScript extends BaseTestScript {
      */
     public LoginBaseScript() {
         initModels();
-
+        //load json file
         String path = System.getProperty("user.dir") + "/resources/loginTestData/loginBody.js";
         File file = new File(path);
         try {
@@ -29,14 +29,23 @@ public class LoginBaseScript extends BaseTestScript {
         } catch (IOException e1) {
             e1.printStackTrace();
         }
+        setIdamJsonBody();
+
+    }
+
+    public static void setIdamJsonBody() {
+        //Set Email Address, Password and Device Key form Property file
         setLoginData(loginConstants.getEmailId(), serverConfig.get("Email"));
         setLoginData(loginConstants.getPassword(), serverConfig.get("Password"));
         setLoginData(loginConstants.getDeviceKey(), serverConfig.get("deviceKey"));
-
+        //set idam url
         if (!isIdam) {
             loginURL = apiUrls.get("loginURL");
         } else {
             loginURL = apiUrls.get("IDAMLoginURL");
+            //change Email Id field to Login ID and remove Auto provider ID for Idam account
+            loginJOSNBody = JsonPath.parse(loginJOSNBody).renameKey("@", "emailId", "loginId").jsonString();
+            loginJOSNBody = JsonPath.parse(loginJOSNBody).delete(loginConstants.getAuthProviderId()).jsonString();
         }
     }
 
@@ -46,7 +55,6 @@ public class LoginBaseScript extends BaseTestScript {
     private void initModels() {
         loginConstants = new LoginConstants();
     }
-
 
 
     /**
@@ -87,7 +95,7 @@ public class LoginBaseScript extends BaseTestScript {
     /**
      * Method to update Login JSON Body
      */
-    public void setLoginData(String path, Object value) {
+    public static void setLoginData(String path, Object value) {
         loginJOSNBody = JsonPath.parse(loginJOSNBody).set(path, value).jsonString();
     }
 

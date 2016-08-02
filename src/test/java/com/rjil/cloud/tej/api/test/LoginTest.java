@@ -1,5 +1,6 @@
 package com.rjil.cloud.tej.api.test;
 
+import com.jayway.jsonpath.JsonPath;
 import com.jayway.restassured.module.jsv.JsonSchemaValidator;
 import com.jayway.restassured.response.ValidatableResponse;
 import com.rjil.cloud.tej.apihelpers.LoginBaseScript;
@@ -23,13 +24,14 @@ public class LoginTest extends LoginBaseScript {
 
     @DataProvider
     public Object[][] LoginCredentials() throws ParseException {
-        return getTesData("LoginTestdata.xlsx", DataType.EXCEL);
+        return getTesData("LoginTestData/loginBody_DataDriven.js", DataType.JSON);
     }
 
     @Test(dataProvider = "LoginCredentials")
 
-    public void checkStatus(TestDataRecord record) throws org.json.simple.parser.ParseException, VerificationFailException {
-        loginJOSNBody=record.toString();
+    public void checkStatus(Object record) throws VerificationFailException {
+        loginJOSNBody= JsonPath.parse(record).jsonString();
+        setIdamJsonBody();
         int status = getLoginResponse().extract().statusCode();
         Verify.verifyEquals(status,200,"Verify Success Status");
     }
@@ -41,7 +43,6 @@ public class LoginTest extends LoginBaseScript {
         setLoginData(LoginParameters.AUTHPROVIDERID.getValue(), 1);
         ValidatableResponse response = getLoginResponse();
         int status = response.extract().statusCode();
-
         Verify.verifyEquals(status,200,"Verify Success Status");
     }
 

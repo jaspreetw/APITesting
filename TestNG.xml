@@ -7,7 +7,7 @@
     <!--<parameter name="server" value="SIT" />-->
     <test name="Suite 1" >
     <classes>
-        <class name = "com.rjil.cloud.tej.SecurityAPI.test.LoginTest"/>
+        <class name = "com.rjil.cloud.tej.api.test.LoginTest"/>
     </classes>
  </test>
 
