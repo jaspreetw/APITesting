@@ -39,9 +39,7 @@ public class BaseTestScript {
     public static String accessToken;
     public static String userId;
     public static String authorizationType = "Basic ";
-    public static String boardName = "QA_";
-    protected static String loginJOSNBody = "";
-    protected static String boardJSONBody = "";
+    protected static String loginJSONBody = "";
     protected static String loginURL = "";
     protected static LoginConstants loginConstants;
     protected static BoardConstants boardConstants;
@@ -88,7 +86,7 @@ public class BaseTestScript {
      */
     public void defaultLogin() throws IOException {
         setIdamJsonBody();
-        ValidatableResponse response = given().body(loginJOSNBody).header("Content-Type", "application/json").log().all()
+        ValidatableResponse response = given().body(loginJSONBody).header("Content-Type", "application/json").log().all()
                 .when()
                 .post(loginURL)
                 .then();
@@ -175,8 +173,8 @@ public class BaseTestScript {
     public static void updateJsonIDAM() {
         //change Email Id field to Login ID and remove Auto provider ID for Idam account
         if (isIdam) {
-            loginJOSNBody = JsonPath.parse(loginJOSNBody).renameKey("@", "emailId", "loginId").jsonString();
-            loginJOSNBody = JsonPath.parse(loginJOSNBody).delete(loginConstants.getAuthProviderId()).jsonString();
+            loginJSONBody = JsonPath.parse(loginJSONBody).renameKey("@", "emailId", "loginId").jsonString();
+            loginJSONBody = JsonPath.parse(loginJSONBody).delete(loginConstants.getAuthProviderId()).jsonString();
         }
     }
 
@@ -189,11 +187,11 @@ public class BaseTestScript {
         String path = System.getProperty("user.dir") + "/resources/loginTestData/loginBody.js";
         File file = new File(path);
 
-        loginJOSNBody = JsonPath.parse(file).jsonString();
+        loginJSONBody = JsonPath.parse(file).jsonString();
         //Set Email Address, Password and Device Key form Property file
-        loginJOSNBody = setJsonData(loginConstants.getEmailId(), serverConfig.get("Email"), loginJOSNBody);
-        loginJOSNBody = setJsonData(loginConstants.getPassword(), serverConfig.get("Password"), loginJOSNBody);
-        loginJOSNBody = setJsonData(loginConstants.getDeviceKey(), serverConfig.get("deviceKey"), loginJOSNBody);
+        loginJSONBody = setJsonData(loginConstants.getEmailId(), serverConfig.get("Email"), loginJSONBody);
+        loginJSONBody = setJsonData(loginConstants.getPassword(), serverConfig.get("Password"), loginJSONBody);
+        loginJSONBody = setJsonData(loginConstants.getDeviceKey(), serverConfig.get("deviceKey"), loginJSONBody);
     }
     
     /**

@@ -12,6 +12,7 @@ import static com.jayway.restassured.RestAssured.given;
 
 public class BoardsBaseScript extends BaseTestScript {
     protected static String boardJSONBody;
+    protected static String boardName = "QA_";
     public static int max = 9999;
     public static int min = 100;
 
@@ -31,7 +32,7 @@ public class BoardsBaseScript extends BaseTestScript {
 
 
     /**
-     * Method to get Login Response
+     * Method to get Board Response
      *
      * @return board validatable response
      */

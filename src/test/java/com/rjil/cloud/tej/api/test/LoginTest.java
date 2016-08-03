@@ -31,7 +31,7 @@ public class LoginTest extends LoginBaseScript {
     @Test(dataProvider = "LoginCredentials")
 
     public void checkStatus(Object record) throws VerificationFailException, IOException {
-        loginJOSNBody= JsonPath.parse(record).jsonString();
+        loginJSONBody= JsonPath.parse(record).jsonString();
         setIdamJsonBody();
         int status = getLoginResponse().extract().statusCode();
         Verify.verifyEquals(status,200,"Verify Success Status");
@@ -41,7 +41,7 @@ public class LoginTest extends LoginBaseScript {
     public void checkLogin() throws org.json.simple.parser.ParseException, VerificationFailException, ParseException {
         FrameworkLogger.logStep("Set" + LoginParameters.AUTHPROVIDERID.getValue());
 
-        loginJOSNBody=setJsonData(LoginParameters.AUTHPROVIDERID.getValue(), 1,loginJOSNBody);
+        loginJSONBody=setJsonData(LoginParameters.AUTHPROVIDERID.getValue(), 1,loginJSONBody);
         ValidatableResponse response = getLoginResponse();
         int status = response.extract().statusCode();
         Verify.verifyEquals(status,200,"Verify Success Status");
