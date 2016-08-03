@@ -70,7 +70,7 @@ public class BaseTestScript {
     /**
      * Precondition manager for any precondition. this method can be override in Feature Base Script
      */
-    public void preConditionManager() {
+    public void preConditionManager() throws IOException {
         if (!(this instanceof LoginBaseScript)) {
             defaultLogin();
         }
@@ -79,7 +79,8 @@ public class BaseTestScript {
     /**
      * Method to default login
      */
-    public void defaultLogin() {
+    public void defaultLogin() throws IOException {
+        setIdamJsonBody();
         ValidatableResponse response = given().body(loginJOSNBody).header("Content-Type", "application/json").log().all()
                 .when()
                 .post(loginURL)
@@ -161,6 +162,9 @@ public class BaseTestScript {
         }
     }
 
+    /**
+     * Update login json body for IDAM login
+     */
     public static void updateJsonIDAM() {
         //change Email Id field to Login ID and remove Auto provider ID for Idam account
         if (isIdam) {
@@ -169,6 +173,10 @@ public class BaseTestScript {
         }
     }
 
+    /**
+     * Set user specific data in login json body
+     * @throws IOException
+     */
     public static void setUserData() throws IOException {
         //load json file
         String path = System.getProperty("user.dir") + "/resources/loginTestData/loginBody.js";
@@ -194,7 +202,7 @@ public class BaseTestScript {
      * @return Access Token
      */
     public static String getAccessToken(ValidatableResponse response) {
-        String accessToken = response.extract().path("accessToken");
+        String accessToken = response.extract().path("authToken.accessToken");
         accessToken = Base64.b64encode(accessToken);
         return accessToken;
     }

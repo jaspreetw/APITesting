@@ -1,7 +1,7 @@
 package com.rjil.cloud.tej.apiconstants;
 
 /**
- * Login API Model Class
+ * Login API Constants Class
  */
 public class LoginConstants {
 
