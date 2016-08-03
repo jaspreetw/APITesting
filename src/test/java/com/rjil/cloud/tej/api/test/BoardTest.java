@@ -26,6 +26,7 @@ public class BoardTest extends BoardsBaseScript {
     public void checkLogin() throws org.json.simple.parser.ParseException, VerificationFailException, ParseException, IOException {
 
         ValidatableResponse response = getCreateBoardAPIResponse();
+        System.out.println(response);
         int status = response.extract().statusCode();
         Verify.verifyEquals(status,200,"Verify Success Status");
     }
