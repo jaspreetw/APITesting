@@ -39,6 +39,7 @@ public class BaseTestScript {
     public static String accessToken;
     public static String userId;
     public static String authorizationType = "Basic ";
+    public static String boardName = "QA_";
     protected static String loginJOSNBody = "";
     protected static String boardJSONBody = "";
     protected static String loginURL = "";

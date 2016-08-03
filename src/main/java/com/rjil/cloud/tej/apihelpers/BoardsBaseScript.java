@@ -21,10 +21,12 @@ public class BoardsBaseScript extends BaseTestScript {
 
     protected static void setBoardJsonBody() throws IOException {
         //load json file
+    	boardName=boardName+Utils.setRandomValue(max, min);
         String path = System.getProperty("user.dir") + "/resources/boardTestData/boardBody.js";
         File file = new File(path);
         boardJSONBody = JsonPath.parse(file).jsonString();
-        boardJSONBody = setJsonData(boardConstants.getBoardName(), serverConfig.get("boardName")+Utils.setRandomValue(max, min), boardJSONBody);
+        boardJSONBody = setJsonData(boardConstants.getBoardName(), boardName, boardJSONBody);
+      
     }
 
 
