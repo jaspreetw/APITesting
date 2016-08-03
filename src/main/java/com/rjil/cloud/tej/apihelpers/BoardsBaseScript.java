@@ -17,7 +17,7 @@ public class BoardsBaseScript extends BaseTestScript {
         return apiUrls.get("baseURL") + apiUrls.get("boardsURL");
     }
 
-    protected static void getBoardJsonBody() throws IOException {
+    protected static void setBoardJsonBody() throws IOException {
         //load json file
         String path = System.getProperty("user.dir") + "/resources/boardTestData/boardBody.js";
         File file = new File(path);
@@ -32,7 +32,7 @@ public class BoardsBaseScript extends BaseTestScript {
      * @return board validatable response
      */
     public static ValidatableResponse getCreateBoardAPIResponse() throws IOException {
-        getBoardJsonBody();
+        setBoardJsonBody();
         ValidatableResponse response = given().body(boardJOSNBody)
                 .header("Content-Type", "application/json")
                 .header(BoardParameters.XUSERID.getValue(), userId)
