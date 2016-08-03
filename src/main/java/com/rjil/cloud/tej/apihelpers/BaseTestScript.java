@@ -6,6 +6,7 @@ import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.config.LogConfig;
 import com.jayway.restassured.filter.log.LogDetail;
 import com.jayway.restassured.response.ValidatableResponse;
+import com.rjil.cloud.tej.apiconstants.BoardConstants;
 import com.rjil.cloud.tej.apiconstants.LoginConstants;
 import com.rjil.cloud.tej.common.Base64;
 import com.rjil.cloud.tej.common.Utils;
@@ -14,6 +15,8 @@ import com.rjil.cloud.tej.common.datadriven.model.TestDataRecord;
 import com.rjil.cloud.tej.common.datadriven.reader.*;
 import com.rjil.cloud.tej.common.logging.FrameworkLogger;
 import com.rjil.cloud.tej.enums.DataType;
+
+import org.apache.log4j.Logger;
 import org.testng.annotations.BeforeSuite;
 
 import java.io.File;
@@ -35,10 +38,12 @@ public class BaseTestScript {
     public static Map<String, String> serverConfig;
     public static String accessToken;
     public static String userId;
-    public static StringBuffer authorizationType;
+    public static String authorizationType = "Basic ";
     protected static String loginJOSNBody = "";
+    protected static String boardJSONBody = "";
     protected static String loginURL = "";
     protected static LoginConstants loginConstants;
+    protected static BoardConstants boardConstants;
 
     /**
      * Base Test script Constructor
@@ -185,15 +190,15 @@ public class BaseTestScript {
 
         loginJOSNBody = JsonPath.parse(file).jsonString();
         //Set Email Address, Password and Device Key form Property file
-        loginJOSNBody = setLoginData(loginConstants.getEmailId(), serverConfig.get("Email"), loginJOSNBody);
-        loginJOSNBody = setLoginData(loginConstants.getPassword(), serverConfig.get("Password"), loginJOSNBody);
-        loginJOSNBody = setLoginData(loginConstants.getDeviceKey(), serverConfig.get("deviceKey"), loginJOSNBody);
+        loginJOSNBody = setJsonData(loginConstants.getEmailId(), serverConfig.get("Email"), loginJOSNBody);
+        loginJOSNBody = setJsonData(loginConstants.getPassword(), serverConfig.get("Password"), loginJOSNBody);
+        loginJOSNBody = setJsonData(loginConstants.getDeviceKey(), serverConfig.get("deviceKey"), loginJOSNBody);
     }
-
+    
     /**
      * Method to update Login JSON Body
      */
-    public static String setLoginData(String path, Object value, String jsonString) {
+    public static String setJsonData(String path, Object value, String jsonString) {
         return JsonPath.parse(jsonString).set(path, value).jsonString();
     }
 
@@ -204,8 +209,9 @@ public class BaseTestScript {
      */
     public static String getAccessToken(ValidatableResponse response) {
         String accessToken = response.extract().path("authToken.accessToken");
-        authorizationType= new StringBuffer("Baisc");
-        accessToken =authorizationType.append(authorizationType. Base64.b64encode(accessToken));
+        String token = Base64.b64encode(accessToken);
+        accessToken =authorizationType.concat(token);
+        System.out.println(accessToken);
         return accessToken;
     }
 
