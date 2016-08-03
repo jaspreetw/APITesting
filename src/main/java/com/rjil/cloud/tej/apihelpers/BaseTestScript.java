@@ -35,6 +35,7 @@ public class BaseTestScript {
     public static Map<String, String> serverConfig;
     public static String accessToken;
     public static String userId;
+    public static StringBuffer authorizationType;
     protected static String loginJOSNBody = "";
     protected static String loginURL = "";
     protected static LoginConstants loginConstants;
@@ -203,7 +204,8 @@ public class BaseTestScript {
      */
     public static String getAccessToken(ValidatableResponse response) {
         String accessToken = response.extract().path("authToken.accessToken");
-        accessToken = Base64.b64encode(accessToken);
+        authorizationType= new StringBuffer("Baisc");
+        accessToken =authorizationType.append(authorizationType. Base64.b64encode(accessToken));
         return accessToken;
     }
 

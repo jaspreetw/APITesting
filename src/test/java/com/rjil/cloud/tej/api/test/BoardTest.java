@@ -43,6 +43,7 @@ public class BoardTest extends BoardsBaseScript {
 
 
         ValidatableResponse response = getCreateBoardAPIResponse();
+        System.out.println(response);
         int status = response.extract().statusCode();
         Verify.verifyEquals(status,200,"Verify Success Status");
     }

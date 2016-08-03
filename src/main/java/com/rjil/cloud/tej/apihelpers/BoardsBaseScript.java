@@ -37,6 +37,7 @@ public class BoardsBaseScript extends BaseTestScript {
                 .header("Content-Type", "application/json")
                 .header(BoardParameters.XUSERID.getValue(), userId)
                 .header(BoardParameters.XDEVICEKEY.getValue(), serverConfig.get("deviceKey"))
+                .header("Authorization",accessToken)
                 .log().all()
                 .when()
                 .post(getBoardURL())
