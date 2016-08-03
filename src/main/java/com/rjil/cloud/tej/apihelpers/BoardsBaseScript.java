@@ -25,7 +25,6 @@ public class BoardsBaseScript extends BaseTestScript {
     }
 
 
-
     /**
      * Method to get Login Response
      *

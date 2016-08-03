@@ -17,41 +17,16 @@ import java.io.IOException;
 import java.text.ParseException;
 
 /**
- * Login script
+ * Board script
  */
 
 public class BoardTest extends BoardsBaseScript {
 
-/*
-    @DataProvider
-    public Object[][] LoginCredentials() throws ParseException {
-        return getTesData("LoginTestData/loginBody_DataDriven.js", DataType.JSON);
-    }
-
-    @Test(dataProvider = "LoginCredentials")
-
-    public void checkStatus(Object record) throws VerificationFailException, IOException {
-        loginJOSNBody= JsonPath.parse(record).jsonString();
-        setIdamJsonBody();
-        int status = getLoginResponse().extract().statusCode();
-        Verify.verifyEquals(status,200,"Verify Success Status");
-    }*/
-
     @Test
     public void checkLogin() throws org.json.simple.parser.ParseException, VerificationFailException, ParseException, IOException {
-        FrameworkLogger.logStep("Set" + LoginParameters.AUTHPROVIDERID.getValue());
-
 
         ValidatableResponse response = getCreateBoardAPIResponse();
         int status = response.extract().statusCode();
         Verify.verifyEquals(status,200,"Verify Success Status");
     }
-/*
-
-    @Test
-    public void checkLoginSchema() {
-        getLoginResponse().body(JsonSchemaValidator.matchesJsonSchemaInClasspath("loginTestData/test-schema.json"));
-    }
-*/
-
 }
