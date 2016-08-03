@@ -13,7 +13,7 @@ public class LoginBaseScript extends BaseTestScript {
      * @return Login validatable response
      */
     public static ValidatableResponse getLoginResponse() {
-        ValidatableResponse response = given().body(loginJOSNBody).header("Content-Type", "application/json").log().all()
+        ValidatableResponse response = given().body(loginJSONBody).header("Content-Type", "application/json").log().all()
                 .when()
                 .post(loginURL)
                 .then();

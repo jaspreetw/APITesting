@@ -6,6 +6,7 @@ import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.config.LogConfig;
 import com.jayway.restassured.filter.log.LogDetail;
 import com.jayway.restassured.response.ValidatableResponse;
+import com.rjil.cloud.tej.apiconstants.BoardConstants;
 import com.rjil.cloud.tej.apiconstants.LoginConstants;
 import com.rjil.cloud.tej.common.Base64;
 import com.rjil.cloud.tej.common.Utils;
@@ -14,6 +15,8 @@ import com.rjil.cloud.tej.common.datadriven.model.TestDataRecord;
 import com.rjil.cloud.tej.common.datadriven.reader.*;
 import com.rjil.cloud.tej.common.logging.FrameworkLogger;
 import com.rjil.cloud.tej.enums.DataType;
+
+import org.apache.log4j.Logger;
 import org.testng.annotations.BeforeSuite;
 
 import java.io.File;
@@ -35,9 +38,11 @@ public class BaseTestScript {
     public static Map<String, String> serverConfig;
     public static String accessToken;
     public static String userId;
-    protected static String loginJOSNBody = "";
+    public static String authorizationType = "Basic ";
+    protected static String loginJSONBody = "";
     protected static String loginURL = "";
     protected static LoginConstants loginConstants;
+    protected static BoardConstants boardConstants;
 
     /**
      * Base Test script Constructor
@@ -81,7 +86,7 @@ public class BaseTestScript {
      */
     public void defaultLogin() throws IOException {
         setIdamJsonBody();
-        ValidatableResponse response = given().body(loginJOSNBody).header("Content-Type", "application/json").log().all()
+        ValidatableResponse response = given().body(loginJSONBody).header("Content-Type", "application/json").log().all()
                 .when()
                 .post(loginURL)
                 .then();
@@ -168,8 +173,8 @@ public class BaseTestScript {
     public static void updateJsonIDAM() {
         //change Email Id field to Login ID and remove Auto provider ID for Idam account
         if (isIdam) {
-            loginJOSNBody = JsonPath.parse(loginJOSNBody).renameKey("@", "emailId", "loginId").jsonString();
-            loginJOSNBody = JsonPath.parse(loginJOSNBody).delete(loginConstants.getAuthProviderId()).jsonString();
+            loginJSONBody = JsonPath.parse(loginJSONBody).renameKey("@", "emailId", "loginId").jsonString();
+            loginJSONBody = JsonPath.parse(loginJSONBody).delete(loginConstants.getAuthProviderId()).jsonString();
         }
     }
 
@@ -182,17 +187,17 @@ public class BaseTestScript {
         String path = System.getProperty("user.dir") + "/resources/loginTestData/loginBody.js";
         File file = new File(path);
 
-        loginJOSNBody = JsonPath.parse(file).jsonString();
+        loginJSONBody = JsonPath.parse(file).jsonString();
         //Set Email Address, Password and Device Key form Property file
-        loginJOSNBody = setLoginData(loginConstants.getEmailId(), serverConfig.get("Email"), loginJOSNBody);
-        loginJOSNBody = setLoginData(loginConstants.getPassword(), serverConfig.get("Password"), loginJOSNBody);
-        loginJOSNBody = setLoginData(loginConstants.getDeviceKey(), serverConfig.get("deviceKey"), loginJOSNBody);
+        loginJSONBody = setJsonData(loginConstants.getEmailId(), serverConfig.get("Email"), loginJSONBody);
+        loginJSONBody = setJsonData(loginConstants.getPassword(), serverConfig.get("Password"), loginJSONBody);
+        loginJSONBody = setJsonData(loginConstants.getDeviceKey(), serverConfig.get("deviceKey"), loginJSONBody);
     }
-
+    
     /**
      * Method to update Login JSON Body
      */
-    public static String setLoginData(String path, Object value, String jsonString) {
+    public static String setJsonData(String path, Object value, String jsonString) {
         return JsonPath.parse(jsonString).set(path, value).jsonString();
     }
 
@@ -203,7 +208,9 @@ public class BaseTestScript {
      */
     public static String getAccessToken(ValidatableResponse response) {
         String accessToken = response.extract().path("authToken.accessToken");
-        accessToken = Base64.b64encode(accessToken);
+        String token = Base64.b64encode(accessToken);
+        accessToken =authorizationType.concat(token);
+        System.out.println(accessToken);
         return accessToken;
     }
 

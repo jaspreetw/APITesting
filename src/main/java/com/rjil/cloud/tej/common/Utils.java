@@ -6,6 +6,7 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Random;
 
 /**
  * Utils Class for util methods
@@ -141,5 +142,14 @@ public class Utils {
             e.printStackTrace();
         }
     }
+    
+    /**
+     * @author Prateek
+     * Method to set pseudo ranodm number 
+     */
+    public static int setRandomValue(int max, int min){
+    	return (int)(Math.random() * ((max - min) + 1)) + min;
+    	}
+    	
 }
 

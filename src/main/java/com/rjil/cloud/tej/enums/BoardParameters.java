@@ -37,7 +37,9 @@ public enum BoardParameters {
     BOARDOWNERID("boardOwnerId"),
     OWNERPROFILENAME("ownerProfileName"),
     LIKECOUNT("likeCount"),
-    FILEDETAILS("fileDetails");
+    FILEDETAILS("fileDetails"),
+	AUTHORIZATION("Authorization"),
+	ACCEPTLANGUAGE("Accept-Language");
 
     public String value;
 
