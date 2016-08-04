@@ -13,6 +13,7 @@ import com.rjil.cloud.tej.enums.LoginParameters;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 
@@ -38,7 +39,7 @@ public class LoginTest extends LoginBaseScript {
     }
 
     @Test
-    public void checkLogin() throws org.json.simple.parser.ParseException, VerificationFailException, ParseException {
+    public void checkLogin() throws VerificationFailException, IOException {
         FrameworkLogger.logStep("Set" + LoginParameters.AUTHPROVIDERID.getValue());
 
         loginJSONBody=setJsonData(LoginParameters.AUTHPROVIDERID.getValue(), 1,loginJSONBody);
@@ -48,7 +49,7 @@ public class LoginTest extends LoginBaseScript {
     }
 
     @Test
-    public void checkLoginSchema() {
+    public void checkLoginSchema() throws IOException {
         getLoginResponse().body(JsonSchemaValidator.matchesJsonSchemaInClasspath("loginTestData/test-schema.json"));
     }
 

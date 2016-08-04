@@ -3,6 +3,8 @@ package com.rjil.cloud.tej.apihelpers;
 import com.jayway.restassured.response.ValidatableResponse;
 import com.rjil.cloud.tej.common.Utils;
 
+import java.io.IOException;
+
 import static com.jayway.restassured.RestAssured.given;
 
 public class LoginBaseScript extends BaseTestScript {
@@ -12,7 +14,9 @@ public class LoginBaseScript extends BaseTestScript {
      *
      * @return Login validatable response
      */
-    public static ValidatableResponse getLoginResponse() {
+    public static ValidatableResponse getLoginResponse() throws IOException {
+        getLoginUrl();
+        setIdamJsonBody();
         ValidatableResponse response = given().body(loginJSONBody).header("Content-Type", "application/json").log().all()
                 .when()
                 .post(loginURL)
